@@ -10,7 +10,7 @@ class OrderAddress(models.Model):
     user = models.ForeignKey(User, on_delete= models.CASCADE)
     address = models.CharField(max_length=100)
     second_address =models.CharField(max_length=100, null=True)
-    country = CountryField(multiple=False)
+    country = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=100)
     phone = models.CharField(max_length=100, null=True)
     email = models.CharField(max_length=100, null=True)

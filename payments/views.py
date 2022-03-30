@@ -80,12 +80,13 @@ def swahilies(request, payment_option):
     return render(request, 'payments/swahilies.html')
 
 
-def process_payment(payload, order_id):
+def process_payment(request, order_id):
+    cart = Cart.objects.get(user=request.user, ordered=False)
     payload = {
         "api":170, "code":101,"data":{
         "api_key":key,
         "order_id": order_id,
-        "amount":1000,
+        "amount":cart.get_line_total,
         "username":"Afrogulio",
         "phone_number":"0783262616",
         "is_live":False,
