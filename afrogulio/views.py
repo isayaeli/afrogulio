@@ -63,6 +63,15 @@ def product_details(request,id):
     ratings =  Product_Rating.objects.filter(rating_for=product.id).annotate(count = Count('rating_value'))
     all_ratings =  Product_Rating.objects.filter(rating_for=product.id)
 
+    page = request.GET.get('page', 1)
+    paginator = Paginator(all_ratings, 2)
+    try:
+        rating_list = paginator.page(page)
+    except PageNotAnInteger:
+        rating_list = paginator.page(1)
+    except EmptyPage:
+        rating_list =paginator.page(paginator.num_pages)
+
 
     context = {
         'data':product,
@@ -70,7 +79,8 @@ def product_details(request,id):
         'rates':rates,
         'ratings':ratings,
         'all_ratings':all_ratings,
-        'products':products
+        'products':products,
+        'rating_list':rating_list
     }
     return render(request, 'afrogulio/product_details.html', context)
 

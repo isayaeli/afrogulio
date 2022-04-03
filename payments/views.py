@@ -12,7 +12,7 @@ from payments.models import OrderAddress
 from . forms import checkoutForm
 from afrogulio.models import Cart
 
-key = settings.SECRET_KEY
+key = settings.SWAHILIES_SECRET_KEY
 url = "https://swahiliesapi.invict.site/Api"
 headers = {'User-Agent': 'Mozilla/5.0'}
 

@@ -332,7 +332,7 @@
                                 </div>
                                 <div id="comments">
                                     <ol class="commentlist">
-                                        {% for data in all_ratings %}
+                                        {% for data in rating_list %}
                                         <li class="review">
                                             <div class="comment-container">
                                                 <div class="row">
@@ -340,7 +340,7 @@
                                                         <p class="comment-in"><span class="post-name">{{data.rating_for}}</span><span class="post-date">{{data.rating_date|date:"d/m/Y"}}</span></p>
                                                         <div  class="">{% include 'includes/rating_value.html' %}</div>
                                                         <p class="author">by: <b>{{data.rating_by.username}}</b></p>
-                                                        <p class="comment-text">{{data.rating_for.details}}</p>
+                                                        <p class="comment-text">{{data.comments}}</p>
                                                     </div>
                                                     <div class="comment-review-form col-lg-3 col-lg-offset-1 col-md-3 col-sm-4 col-xs-12">
                                                         <span class="title">Was this review helpful?</span>
@@ -355,19 +355,38 @@
                                         </li>
                                         {% endfor %}
                                     </ol>
-                                    <div class="biolife-panigations-block version-2">
-                                        <ul class="panigation-contain">
-                                            <li><span class="current-page">1</span></li>
-                                            <li><a href="#" class="link-page">2</a></li>
-                                            <li><a href="#" class="link-page">3</a></li>
-                                            <li><span class="sep">....</span></li>
-                                            <li><a href="#" class="link-page">20</a></li>
-                                            <li><a href="#" class="link-page next"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                                        </ul>
-                                        <div class="result-count">
-                                            <p class="txt-count"><b>1-5</b> of <b>126</b> reviews</p>
-                                            <a href="#" class="link-to">See all<i class="fa fa-caret-right" aria-hidden="true"></i></a>
-                                        </div>
+                                    <div class="biolife-panigations-block  ">
+                                        {% if rating_list.has_other_pages %}
+                                            <ul class="pagination">
+                                                {% if rating_list.has_previous %}
+                                                    <li class="page-item">
+                                                        <a class="page-link text-dark" href="?page={{ rating_list.previous_page_number }}" aria-label="Previous">
+                                                        <span><i class="fa fa-long-arrow-left" ></i></span>
+                                                        </a>
+                                                    </li>
+                                                {% else %}
+                                                <li class="page-item disabled text-center"></li>
+                                                {% endif %}
+            
+                                                {% for i in rating_list.paginator.page_range %}
+                                                    {% if rating_list.number == i %}
+                                                        <li class="page-item "><a class="page-link  bg-warning text-dark" href="?page={{i}}">{{ i }}</a></li>
+                                                    {% else %}
+                                                        <li class="page-item"><a class="page-link text-dark" href="?page={{i}}">{{ i }}</a></li>
+                                                    {% endif %}
+                                                {% endfor %}
+            
+                                                {% if rating_list.has_next %}
+                                                    <li class="page-item">
+                                                        <a class="page-link text-dark" href="?page={{ rating_list.next_page_number }}" aria-label="Next">
+                                                        <span><i class="fa fa-long-arrow-right" ></i></span>
+                                                        </a>
+                                                    </li>
+                                                {% else %}
+                                                <li class="page-item disabled text-center"></li>
+                                                {% endif %}
+                                            </ul>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
